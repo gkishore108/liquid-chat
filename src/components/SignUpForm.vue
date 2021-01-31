@@ -8,7 +8,7 @@
     />
     <input type="text" required placeholder="email" v-model="email" />
     <input type="password" required placeholder="password" v-model="password" />
-    <div class="error">{{ error }}</div>
+    <div ref="errorDiv" class="error">{{ error }}</div>
     <button>Sign Up</button>
   </form>
 </template>
@@ -18,15 +18,26 @@ import { ref } from "vue";
 import useSignup from "../composables/useSignup";
 
 export default {
-  setup() {
+  setup(props, context) {
     const { error, signup } = useSignup();
 
+    const errorDiv = ref(null);
     const displayName = ref("");
     const email = ref("");
     const password = ref("");
 
     const handleSubmit = async () => {
       await signup(email.value, password.value, displayName.value);
+
+      if (error.value) {
+        setTimeout(() => {
+          errorDiv.value.classList.add("remove");
+          error.value = null;
+        }, 5000);
+      }
+      if (!error.value) {
+        context.emit("signin");
+      }
     };
 
     return {
@@ -35,9 +46,14 @@ export default {
       email,
       password,
       handleSubmit,
+      errorDiv,
     };
   },
 };
 </script>
 
-<style></style>
+<style>
+.remove {
+  display: none;
+}
+</style>
