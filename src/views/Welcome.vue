@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <img class="center" src="../assets/liquid_cht.jpg" />
+  </div>
   <div class="welcome container">
     <p>Welcome to Liquid Chat</p>
 
@@ -45,6 +48,12 @@ export default {
 </script>
 
 <style>
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .welcome {
   text-align: center;
   padding: 20px 0;

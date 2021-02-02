@@ -15,11 +15,22 @@ const authGuard = (to, from, next) => {
   }
 };
 
+const authNoGuard = (to, from, next) => {
+  let user = projectAuth.currentUser;
+  // console.log("CUrrent User: ", user);
+  if (user) {
+    next({ name: "Chatroom" });
+  } else {
+    next();
+  }
+};
+
 const routes = [
   {
     path: "/",
     name: "Welcome",
     component: Welcome,
+    beforeEnter: authNoGuard,
   },
   {
     path: "/chatroom",

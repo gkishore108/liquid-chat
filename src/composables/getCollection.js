@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { projectFireStore } from "../firebase/config";
 
 const getCollection = (collection) => {
@@ -9,7 +9,7 @@ const getCollection = (collection) => {
     .collection(collection)
     .orderBy("createdAt");
 
-  collectionRef.onSnapshot(
+  const unsub = collectionRef.onSnapshot(
     (snap) => {
       let results = [];
       snap.docs.forEach((doc) => {
@@ -24,6 +24,10 @@ const getCollection = (collection) => {
       err.message = "could not fect data";
     }
   );
+
+  watchEffect((onInvalidate) => {
+    onInvalidate(() => unsub());
+  });
 
   return { error, documents };
 };
