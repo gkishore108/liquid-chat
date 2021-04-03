@@ -1,5 +1,11 @@
 # liquid-chat
 
+A live chat application where users can register, login and chat with other members. 
+
+Created using Vue JS and Firebase. 
+
+Website Live Link -> https://jukebox-a230b.web.app/
+
 ## Project setup
 ```
 npm install
